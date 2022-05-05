@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId("brand_id")->constrained();
             $table->string("image");
             $table->string("price");
+            $table->text("description");
             $table->string("discount_price");
             $table->string("stock");
             $table->timestamps();

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string("state");
             $table->string("name");
             $table->string("contact");
-            $table->string("type");
+            $table->string("type",["office","home"])->default("home");
             $table->timestamps();
         });
     }

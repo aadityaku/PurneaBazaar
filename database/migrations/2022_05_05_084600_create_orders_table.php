@@ -18,11 +18,11 @@ return new class extends Migration
             $table->foreignId("user_id")->constrained();
             $table->foreignId("address_id")->constrained();
             $table->foreignId("coupon_id")->constrained();
-            $table->string("isDeliverd");
-            $table->string("isProcessing");
-            $table->string("isShiped");
-            $table->string("dateofordered");
-            $table->boolean("ordered");
+            $table->boolean("isDeliverd")->default(0);
+            $table->boolean("isProcessing")->default(0);
+            $table->boolean("isShipped")->default(0);
+            $table->date("dateofordered");
+            $table->boolean("ordered")->default(0);
             $table->timestamps();
         });
     }
