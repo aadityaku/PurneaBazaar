@@ -23,6 +23,7 @@
                                 <strong>Product Title</strong>
                                 <p class="m-0 p-0">Rs. 400/- <del>600/-</del></p>
                                 <p class="m-0 p-0">Mobile</p>
+                                <a href="{{ route('viewproduct',['p_id'=>1] ) }}" class="stretched-link"></a>
                             </div>
                         </div>
                     </div>

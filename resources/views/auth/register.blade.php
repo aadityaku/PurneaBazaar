@@ -1,13 +1,13 @@
-<x-guest-layout>
-    <x-auth-card>
+@extends('public/master')
+@section('content')
+<x-guest-layout class="mb-5">
+    <x-auth-card class="mb-5">
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+            
         </x-slot>
 
         <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <x-auth-validation-errors class="mb-0" :errors="$errors" />
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
@@ -57,3 +57,5 @@
         </form>
     </x-auth-card>
 </x-guest-layout>
+
+@endsection

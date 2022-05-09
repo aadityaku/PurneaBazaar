@@ -48,7 +48,7 @@
                    </table>
                    <div class="row">
                        <div class="col">
-                           <a href="" class="btn btn-success">Add To Cart</a>
+                           <a href="{{ route('cart') }}" class="btn btn-success">Add To Cart</a>
                            <a href="" class="btn btn-warning">Buy Now</a>
                        </div>
                       
