@@ -8,20 +8,24 @@
 </div>
     <div class="container">
         <div class="row">
+            @foreach ($order as $item)
             <div class="col-8 mt-3">
                 {{-- <h4>My cart</h4> --}}
                 <div class="row">
                     <div class="col-12 mt-3">
                         <div class="card">
                             <div class="row g-0">
+                               
+                                    
+                                
                                 <div class="col-3">
-                                    <img src="https://via.placeholder.com/200.jpg" class="w-100" alt="">
+                                    <img src="{{asset('image/'.$item->orderItem->image) }}" class="w-100" alt="">
             
                                 </div>
                                 <div class="col-9 card-body">
-                                    <h5>THis is Product Title</h5>
-                                    <p>Mobile</p>
-                                    <h6>Rs 500/- <del>1000/-</del></h6>
+                                    <h5>{{$item->orderItem->title}}</h5>
+                                    <p>{{$item->orderItem->category_id}}</p>
+                                    <h6>Rs {{$item->orderItem->discount_price}}/- <del>{{$item->orderItem->price}}/-</del></h6>
                                     <a href="" class="btn btn-success">-</a>
                                     <span class="lead fw-bolder">0</span>
                                     <a href="" class="btn btn-warning">+</a>
@@ -31,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                
+            @endforeach  
             </div>
             <div class="col-4 mt-3">
                 <h4>Bill Details</h4>

@@ -14,7 +14,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $data['brands']=Brand::all();
+        return view("admin.manageBrand",$data);
     }
 
     /**
@@ -24,7 +25,8 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        $data['brands']=Brand::all();
+        return view("admin.insertBrand",$data);
     }
 
     /**
@@ -35,7 +37,13 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'brand_title'=>'required',
+        ]);
+        $brand=new Brand();
+        $brand->brand_title=$request->brand_title;
+        $brand->save();
+        return redirect()->route("brand.index")->with("success","Succesfully");
     }
 
     /**
@@ -57,7 +65,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return view("admin.editBrand",["brands"=>$brand]);
     }
 
     /**
@@ -69,7 +77,13 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $request->validate([
+            'brand_title'=>'required',
+        ]);
+      
+        $brand->brand_title=$request->brand_title;
+        $brand->save();
+        return redirect()->route("brand.index")->with("success"," Updataed Data Succesfully");
     }
 
     /**
@@ -80,6 +94,7 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+        return redirect()->route("brand.index")->with("error","Oh! Data deleted Successfully");
     }
 }

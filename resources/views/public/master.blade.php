@@ -11,7 +11,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a href="" class="navbar-brand">Purnea Bazar</a>
-            <form action="" method="post" class="d-flex">
+            <form action="" method="GET" class="d-flex">
                 <input type="text" name="search" class="form-control border-0 rounded-0" size="60" placeholder="Seacrh here Product">
                 <input type="submit" name="find" class="btn  bg-white border-0 rounded-0"  value="Go">
             </form>

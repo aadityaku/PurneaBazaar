@@ -2,84 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 
+
 class CouponController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        //
+        return view("admin.manageCoupon",['coupon'=>Coupon::all()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
-        //
+        return view("admin.insertCoupon");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'amount'=>'required',
+            'code'=>'required',
+        ]);
+        $coupon=new Coupon();
+        $coupon->code=$request->code;
+        $coupon->amount=$request->amount;
+        $coupon->status=True;
+        $coupon->save();
+        return redirect()->route("coupon.index")->with("success","Wow Data inserted successfully!");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Coupon  $coupon
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(Coupon $coupon)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Coupon  $coupon
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(Coupon $coupon)
     {
-        //
+        return view("admin.editCoupon",['coupon'=>$coupon]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Coupon  $coupon
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Coupon $coupon)
     {
-        //
+        $request->validate([
+            'amount'=>'required',
+            'code'=>'required',
+        ]);
+        
+        $coupon->code=$request->code;
+        $coupon->amount=$request->amount;
+        $coupon->status=True;
+        $coupon->save();
+        return redirect()->route("coupon.index")->with("success","Wow Data Updated successfully!");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Coupon  $coupon
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy(Coupon $coupon)
     {
-        //
+       $coupon->delete();
+       return redirect()->route("coupon.index")->with("error","Data Deleted successfully");
     }
 }
