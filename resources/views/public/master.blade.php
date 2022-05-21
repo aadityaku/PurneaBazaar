@@ -19,7 +19,7 @@
                 <li class="nav-item"><a href="{{ route('homepage') }}" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Signup</a></li>
                 <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
-                <li class="nav-item"><a href="{{ route('cart') }}" class="nav-link">Cart</a></li>
+                <li class="nav-item"><a href="{{ route('cart') }}" class="nav-link">Cart <span class="badge bg-danger text-white">{{get_cart_count()}}</span></a></li>
             </ul>
         </div>
     </nav>

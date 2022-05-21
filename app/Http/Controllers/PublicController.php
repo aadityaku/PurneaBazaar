@@ -37,7 +37,7 @@ class PublicController extends Controller
         return view("public/viewProduct",$data);
     }
     public function cart(Request $request){
-         $data['order']=OrderItem::where(['ordered',false])->get();
+         $data['order']=get_order();
         return view("public/cart",$data);
     }
     public function checkOut(){
@@ -48,7 +48,7 @@ class PublicController extends Controller
         $product=Product::find($p_id);
         $user=Auth::user();
         if($product){
-           $order=Order::where([['ordered',false],['user_id',$user->id]])->first();
+           $order=get_order();
            if($order){
                 $orderItem=OrderItem::where([['ordered',false],["order_id",$order->id],['product_id',$product->id]])->first();
                 
@@ -79,8 +79,46 @@ class PublicController extends Controller
 
            }
 
-        }
-        
-        
+        }   
+        return redirect()->route("cart");
+    }
+    public function removeFromCart(Request $request,$p_id){
+        $product=Product::find($p_id);
+        $user=Auth::user();
+        if($product){
+           $order=Order::where([['ordered',false],['user_id',$user->id]])->first();
+           if($order){
+                $orderItem=OrderItem::where([['ordered',false],["order_id",$order->id],['product_id',$product->id]])->first();
+                
+                if($orderItem){
+                    if($orderItem->qty > 1){
+                        $orderItem->qty -=1;
+                        $orderItem->save();
+                    }
+                    else{
+                        $orderItem->delete();
+                    }
+                
+                }
+           }
+           
+        }   
+        return redirect()->route("cart");
+    }
+   
+
+    public function removeItemFromCart(Request $request,$p_id){
+        $product=Product::find($p_id);
+        $user=Auth::user();
+        if($product){
+           $order=Order::where([['ordered',false],['user_id',$user->id]])->first();
+           if($order){
+                $orderItem=OrderItem::where([['ordered',false],["order_id",$order->id],['product_id',$product->id]])->first();
+                if($orderItem){
+                    $orderItem->delete();
+                }
+           }
+        }   
+        return redirect()->route("cart");
     }
 }

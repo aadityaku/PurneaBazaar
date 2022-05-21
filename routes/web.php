@@ -20,6 +20,8 @@ Route::get("/products/{p_id}",[PublicController::class,"viewProduct"])->name("vi
 Route::get("/cart",[PublicController::class,"cart"])->name("cart");
 Route::get("/checkout",[PublicController::class,"checkOut"])->name("checkout");
 Route::get("/add-to-cart/{p_id}",[PublicController::class,"addTCart"])->name("addtocart");
+Route::get("/remove-from-cart/{p_id}",[PublicController::class,"removeFromCart"])->name("removefromcart");
+Route::get("/remove-item-from-cart/{p_id}",[PublicController::class,"removeItemFromCart"])->name("removeitemfromCart");
 
 //Admin Route
 Route::prefix("admin")->group(function(){
