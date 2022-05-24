@@ -41,7 +41,7 @@
                     <div class="list-group-item list-group-item-action bg-success text-dark">Total Discount Amount <span class="float-end">rs. {{total_saving_amount()}}/-</span> </div>
                     <div class="list-group-item list-group-item-action">Tax (%18) <span class="float-end">Rs. {{get_tax()}}/-</span> </div>
                    @if ($order->coupon_id != null)
-                   <div class="list-group-item list-group-item-action bg-warning">Coupon Discount <span class="float-end">Rs. {{$order->coupon->amount}}/-</span> </div>
+                   <div class="list-group-item list-group-item-action bg-warning">Coupon Discount <span class="float-end">Rs. {{$order->coupon->amount}}/- <a href="{{route('removecoupon')}}" class="text-danger fw-bold text-decoration-none" title="Remove Coupon Code">X</a></span> </div>
                    
                    @endif
                     <div class="list-group-item list-group-item-action">Payable Amount <span class="float-end">Rs. {{get_payable_amount()}}/-</span> </div>
@@ -50,6 +50,27 @@
                     <a href="" class="btn btn-success col">Continue Shoping</a>
                     <a href="{{ route('checkout') }}" class="btn btn-danger col ms-2">Checkout</a>
                 </div>
+            @if($order->coupon_id == null)
+            <div class="card mt-3">
+                <div class="card-boy">
+                    <h6>Have Any Coupon?</h6>
+                    <form action="{{ route('applycoupon') }}" method="post" class="d-flex">
+                        @csrf
+                        <input type="text" name="code" value="{{ old('code') }}" class="form-control">
+                        @error('code')
+                            <p class="text-danger small">{{$message}}</p>
+                        @enderror
+                        <input type="submit" name="Apply" class="btn btn-danger">
+                    </form>
+                    @if ($msg=Session::get('msg'))
+                    <div class="alert alert-danger mt-3 p-1 ">{{$msg}}</div>
+                        
+                    @endif
+                </div>
+            </div>
+                
+            @endif
+    
             </div>
         </div>
     </div>

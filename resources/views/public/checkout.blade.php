@@ -12,30 +12,24 @@
                 <h4>Address Fill</h4>
                 <div class="card">
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form action="{{ route('address.store') }}" method="POST">
                             @csrf
                             <div class="row mb-3">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <label for="">Name</label>
                                     <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="Enter Your Name">
                                     @error('name')
                                         <p class="text-danger small">{{$message}}</p>
                                     @enderror
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <label for="">Contact</label>
                                     <input type="text" name="contact" value="{{ old('contact') }}" class="form-control" placeholder="Enter Contact">
                                     @error('contact')
                                         <p class="text-danger small">{{$message}}</p>
                                     @enderror
                                 </div>
-                                <div class="col-lg-4">
-                                    <label for="">Alternative Contact</label>
-                                    <input type="text" name="alt_contact" value="{{ old('alt_contact') }}" class="form-control" placeholder="Enter Alternamtive Conttact">
-                                    @error('alt_contact')
-                                        <p class="text-danger small">{{$message}}</p>
-                                    @enderror
-                                </div>
+                                
                             </div>
                             <div class="row mb-3">
                                 <div class="col-lg-6">
@@ -78,30 +72,49 @@
                                     @enderror
                                 </div>
                                 <div class="col-lg-6">
-                                  <input type="submit" value="Submit & Pay " class="btn btn-success mt-4 w-100">
+                                  <label for="">Address Type</label>
+                                  <select name="type"  class="form-select">
+                                      <option value="office">Office</option>
+                                      <option value="home">Home</option>
+                                  </select>
                                 </div>
                             </div>
-
+                            <div class="mb-3">
+                                <input type="submit" value="Add to " class="btn btn-success w-100">
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 mt-3">
-                <h4>Select Address Sved</h4>
-                <div class="card mt-3 bg-light">
+                @foreach ($addresses as $item)
+                  
+                <div class="card mt-3  @if ($item->type == "office")
+                    border border-success
+                @else
+                    border border-danger
+                @endif bg-light">
                     <div class="card-body">
-                        <h5>Aaditya Kumar(8359393284)</h5>
-                         <p class="small">Kalimandir Old bus stand road Purnea</p>
-                         <a href="" class="btn  btn-sm btn-primary">Use This Address</a>
+                        <span class="@if ($item->type== "office")
+                            bg-success
+                        @else
+                            bg-danger
+                        @endif badge position-absolute shadow-sm text-capitalize" style="right:0;border-radius:5px 0px 0px 5px">
+                            {{$item->type}}
+                        </span>
+                        <h5>{{$item->name}} ({{$item->contact}})</h5>
+                        <p class="small mb-0">{{$item->street}} <br>{{$item->city}} ({{$item->state}}) - {{$item->pincode}}</p>
+                        <p class="small mb-0">LandMark: {{$item->landmark}}</p>
+                        <form action="{{route("paymentprocess")}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="address_id" value="{{$item->id}}">
+                           
+                            <input type="submit" class="btn btn-warning small mt-2 " value="use This">
+                        </form>
                     </div>
                 </div>
-                <div class="card mt-3 bg-light">
-                    <div class="card-body">
-                        <h5>Aaditya Kumar(8359393284)</h5>
-                         <p class="small">Kalimandir Old bus stand road Purnea</p>
-                         <a href="" class="btn  btn-sm btn-primary">Use This Address</a>
-                    </div>
-                </div>
+              @endforeach
+                
             </div>
         </div>
     </div>

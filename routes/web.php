@@ -19,10 +19,14 @@ Route::get("/category/{p_id?}",[PublicController::class,"index"])->name("filter"
 Route::get("/products/{p_id}",[PublicController::class,"viewProduct"])->name("viewproduct");
 Route::get("/cart",[PublicController::class,"cart"])->name("cart");
 Route::get("/checkout",[PublicController::class,"checkOut"])->name("checkout");
+Route::post("/coupon/apply",[PublicController::class,"applyCoupon"])->name("applycoupon");
+Route::post("/payment/process",[PublicController::class,"paymentProcess"])->name("paymentprocess");
+Route::get("/coupon/remove",[PublicController::class,"removeCoupon"])->name("removecoupon");
+
 Route::get("/add-to-cart/{p_id}",[PublicController::class,"addTCart"])->name("addtocart");
 Route::get("/remove-from-cart/{p_id}",[PublicController::class,"removeFromCart"])->name("removefromcart");
 Route::get("/remove-item-from-cart/{p_id}",[PublicController::class,"removeItemFromCart"])->name("removeitemfromCart");
-
+Route::resource("address",AddressController::class)->only("store");
 //Admin Route
 Route::prefix("admin")->group(function(){
    Route::get('/',[AdminController::class,"dashboard"])->name("admin.home");

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string("state");
             $table->string("name");
             $table->string("contact");
+            
             $table->enum("type",["office","home"])->default("home");
             $table->timestamps();
         });

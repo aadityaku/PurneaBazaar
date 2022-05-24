@@ -17,9 +17,19 @@
             </form>
             <ul class="navbar-nav">
                 <li class="nav-item"><a href="{{ route('homepage') }}" class="nav-link">Home</a></li>
+                @guest
                 <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Signup</a></li>
                 <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
+                @endguest
+               
+                @auth
                 <li class="nav-item"><a href="{{ route('cart') }}" class="nav-link">Cart <span class="badge bg-danger text-white">{{get_cart_count()}}</span></a></li>
+                <li class="nav-item"><form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <input type="submit" value="Logout" class="btn btn-primary">
+                </form></li>
+                @endauth
+                
             </ul>
         </div>
     </nav>

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Address;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PublicController;
 class AddressController extends Controller
 {
     /**
@@ -35,7 +36,31 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'contact'=>'required',
+            
+            'street'=>'required',
+            'landmark'=>'required',
+            'city'=>'required',
+            'state'=>'required',
+            'pincode'=>'required',
+            
+        ]);
+        $data=new Address();
+        $data->name=$request->name;
+        $data->contact=$request->contact;
+        
+        $data->street=$request->street;
+        $data->landmark=$request->landmark;
+        $data->city=$request->city;
+        $data->state=$request->state;
+        $data->pincode=$request->pincode;
+        $data->user_id=Auth::id();
+        $data->type=$request->type;
+        $data->save();
+        PublicController::assignAddress($data->id);
+        return redirect()->route('checkout');
     }
 
     /**

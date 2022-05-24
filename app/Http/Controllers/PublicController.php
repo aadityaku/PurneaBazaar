@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -41,7 +43,8 @@ class PublicController extends Controller
         return view("public/cart",$data);
     }
     public function checkOut(){
-        return view("public/checkout");
+        $data['addresses'] = Address::where("user_id",Auth::id())->get();
+        return view("public/checkout",$data);
     }
 
     public function addTCart(Request $request,$p_id){
@@ -120,5 +123,46 @@ class PublicController extends Controller
            }
         }   
         return redirect()->route("cart");
+    }
+    private function checkCode($code){
+        $coupon=Coupon::where([['code',$code],['status',0]])->first();
+        return $coupon;
+    }
+
+    public function applyCoupon(Request $request){
+        $request->validate([
+            'code'=>'required'
+        ]);
+
+        if($coupon=$this->checkCode($request->code)){
+            $order=get_order();
+            $order->coupon_id=$coupon->id;
+            $order->save();
+            return redirect()->route('cart');
+        }
+        else{
+            return redirect()->route('cart')->with("msg","Invalid Coupon");
+        }
+
+    }
+
+    public function removeCoupon(){
+        $order=get_order();
+        $order->coupon_id = null;
+        $order->save();
+        return redirect()->route('cart');
+    }
+
+    static public function assignAddress($id){
+        $address=Address::findOrFail($id);
+        $order=get_order();
+        $order->address_id=$address->id;
+        $order->save();
+        return redirect()->route('checkout');
+    }
+
+    public function paymentProcess(Request $request){
+         
+        return $this->assignAddress($request->address_id);
     }
 }
